@@ -3,7 +3,7 @@ export let socket;
 
 
 export default async function socketConnection(setError, setLoading, token = null, dispatch, auth) {
-    await fetch('/api/socket');
+    await fetch(process.env.BASE_URL + '/api/socket');
    
     socket = io({
         auth : {
