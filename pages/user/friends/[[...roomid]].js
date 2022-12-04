@@ -7,7 +7,7 @@ import { useQuery, useMutation } from "@apollo/client"
 import { getRoom, addMembers } from "utils/queries"
 import User from 'components/user';
 
-export default function friends() {
+export default function Friends() {
     const [ search, user ] = useLazyQuery(getUsers);
     const router = useRouter();
     const { state:{ auth } } = useContext(Context);
