@@ -1,34 +1,45 @@
 import socketConnection from "utils/socketConnection";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import Login from '../pages/login'
+import { useState, useEffect, useContext } from "react";
 import Loading from "./layout/loading";
+import { Context } from "store/globalstore";
+import { useQuery } from "@apollo/client";
+import { refresh } from "utils/queries";
+import { useRouter } from "next/router";
 
 export default function StartUp({ children }) {
     const router = useRouter();
-    const [error, setError] = useState({  })
+    const { state: { auth }, dispatch } = useContext(Context);
     const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        if( error.message && error.data) {
-            console.log(error.message);
-            console.log(`note :${error.data.content}`);
-        }
-        setLoading(false)
-    }, [error])
+    const refreshAuth = useQuery(refresh);
+    const [error, setError] = useState({})
 
-    useEffect(() => {
-        socketConnection(setError);
-    }, [])
     
-    if(loading) return <Loading />
+    
+    useEffect(() => {
+        if(!refreshAuth.loading) {
+            dispatch({ type: 'AUTH', payload: refreshAuth.data ?  {loading: false, ...refreshAuth.data.refresh} : {loading: false}})
+        }
+    }, [refreshAuth])
 
-    if(!loading && error.message) return <Login />
+    useEffect(() => {
+        if(!auth.loading && !auth.accesstoken && !auth.user) {
+            router.push('/login')
+        }
+    }, [auth])
 
-    else {
-        return (
-            <>
-               {children} 
-            </>
-        )
-    }
+    useEffect(() => {
+        if(!refreshAuth.loading){
+            socketConnection(setError, setLoading, auth.accesstoken);
+        }
+    }, [auth])
+    
+    if(loading || refreshAuth.loading) return <Loading />
+    // if(!refreshAuth.loading && error.message && !loading  ) 
+
+    return (
+        <>
+            {children} 
+        </>
+    )
+    
 }

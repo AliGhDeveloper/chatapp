@@ -5,7 +5,7 @@ const link = createHttpLink( {
     
 });
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
     link,
     cache : new InMemoryCache({
         addTypename : false

@@ -1,19 +1,27 @@
 import { io } from "socket.io-client";
-import { useRouter } from "next/router";
-let socket;
+export let socket;
 
 
-export default async function socketConnection(setError) {
+export default async function socketConnection(setError, setLoading, token = null, dispatch, auth) {
     await fetch('/api/socket');
+   
     socket = io({
         auth : {
-            token: "slama"
+            token 
         }
     });
 
+    socket.on("connect_error", (error) => {
+        setError(error)
+        setLoading(false)
+    })
+
+    socket.on('connect',() => {
+        setError({});
+        setLoading(false)
+        console.log('socket connected');
+        // dispatch({ type: 'AUTH', payload: {...auth, user: {...auth.user, socketid}}})
+    });
+
     
-
-    socket.on("connect_error", (error) => setError(error))
-
-    socket.on('connect',() => console.log('socket connected'))
 }

@@ -1,6 +1,6 @@
 import * as actions from './actions';
 
-export const initialValue = { auth: {} };
+export const initialValue = { auth: {loading : true} };
 
 const reducer = (state , action) => {
     switch(action.type) {

@@ -1,0 +1,29 @@
+.userinfo {
+    .poster {
+        position: relative;
+        height: 200px;
+        max-height: 250px;
+        border-bottom: 1px solid #ddd;
+        div.container {
+            position: absolute;
+            bottom : -42px;
+            right: 0;
+            left: 0;
+        }
+        .addfriend {
+            width: 65px;
+            height: 65px;
+            background-color: white;
+        }
+        .avatar {
+            width: 85px;
+            height: 85px;
+            border-radius : 50%
+        }
+        
+    }
+
+}
+.inf {
+    margin-top: 80px;
+}

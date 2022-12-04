@@ -1,15 +1,18 @@
-import { useQuery } from '@apollo/client'
-import { getUsers } from 'utils/queries'
+import { useContext } from 'react';
+import { Context } from 'store/globalstore';
+import Room from 'components/room';
 export default function Home() {
+  const { state : { auth } } = useContext(Context);
 
-  const users = useQuery(getUsers);
-
-  console.log(users)
 
   return(
-    <div className="container">
+    <div className="container pt-5">
       <div className="chats d-flex flex-column">
-        
+        { 
+          auth.user && auth.user.rooms.map(room => {
+            return <Room key={room.id} room={room} /> 
+          })
+        }
       </div>
     </div>
   )

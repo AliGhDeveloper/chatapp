@@ -1,9 +1,23 @@
 import Sidebar from 'components/layout/sidebar'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { Context } from 'store/globalstore';
+import { useRouter } from 'next/router';
+
+
 export default function Navbar() {
+    const router = useRouter();
+    
+    const { state : {auth}} = useContext(Context);
+
+
     const [open, setOpen] = useState(false);
+
+    if(router.route === '/login' || router.route === '/register') return null
+
+    
+
     return (
-        <nav className="navbar bg-light">
+        <nav className="navbar bg-light" >
             <Sidebar open={open} />
             <div className="container-fluid navs" >
                 <a className="navbar-brand">Navbar</a>

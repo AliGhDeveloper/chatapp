@@ -1,16 +1,33 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react";
+import { useMutation } from "@apollo/client";
+import { register } from 'utils/queries';
+import { useRouter } from "next/router";
 
-export default function Login () {
+export default function Register () {
     
-    const [ data, setData ] = useState({ username : "", email: "", password: "" })
+    const [ data, setData ] = useState({ username : "", email: "", password: "" });
+    const { username, email, password } = data
+    const [ addUser, userData ] = useMutation(register);
+    const router = useRouter();
+
+    console.log(userData)
+    useEffect(() => {
+        if(userData.data && userData.data.addUser) {
+            router.push('/login')
+        }
+    }, [userData])
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name] : e.target.value})
     }
 
     const handleLogin = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        if(!username || !password || !email) return console.log('please add all fields')
+        addUser({
+            variables : data,
+        })
     }
     
     return (

@@ -1,0 +1,56 @@
+.room { 
+    cursor: pointer;
+    &:active { 
+        background-color: darken(white, 5%)
+    }
+    user-select: none;
+    @include content;
+    margin: 20px auto
+}
+
+
+
+.chatinputs {
+    border-top : 1px solid #ddd; 
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: white;
+    z-index: 220
+}
+
+.chat-content {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 50px;
+    padding-top: 80px
+}
+
+.message-box {
+    position: relative;
+    margin : 30px 0;
+    border : 1px solid #ddd;
+    border-radius: 8px;
+    max-height: fit-content;
+    width: fit-content;
+    max-width : 400px;
+    background-color: white;
+    .header {
+        padding: 8px;
+        font-size : 12px;
+        color: rgb(48, 130, 253)
+    }
+    
+    .content { 
+        padding: 8px;
+        word-break : break-word
+    }
+    .time {
+        font-size : 10px;
+        text-align : right;
+        position: absolute;
+        right: 0;
+        bottom : -20px;
+    }
+}

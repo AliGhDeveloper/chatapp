@@ -1,18 +1,47 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect, useContext } from "react"
+import { useLazyQuery } from "@apollo/client";
+import { login } from "utils/queries";
+import { Context } from "store/globalstore";
+import { useRouter } from "next/router";
+
 
 export default function Login () {
+    const router = useRouter()
+    const { state: { auth }, dispatch } = useContext(Context)
+    const [ loginFunc, loginData ] = useLazyQuery(login);
+    const [ data, setData ] = useState({ email: "", password: "" });
+    const { email, password } = data
     
-    const [ data, setData ] = useState({ email: "", password: "" })
+    useEffect(() => {
+        if(!auth.loading && auth.accesstoken && auth.user) {
+            router.push('/')
+        }
+    }, [auth])
+
+
+    useEffect(() => {
+        if(loginData.data && loginData.data.login) {
+            dispatch({ type: 'AUTH', payload: {loading: false, ...loginData.data.login}})
+            router.push('/')
+        }
+    }, [ loginData ])
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name] : e.target.value})
     }
 
     const handleLogin = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        if(!email || !password) return console.log('please add all fields');
+
+        loginFunc({
+            variables : data
+        })
     }
     
+    if(auth.loading) return <h1>loading ...</h1>
+
     return (
         <div className="container login">
             <div className="row">

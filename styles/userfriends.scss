@@ -1,0 +1,53 @@
+.addfriend {
+    width: 80px;
+    height: 80px;
+    border : 1px solid #ddd;
+    border-radius: 50%;
+    object-fit: none;
+    object-position: center;
+    box-shadow : $base-box-shadow;
+    cursor: pointer;
+    user-select: none;
+    &:active {
+        box-shadow : 1px 2px 5px rgb(0,0,0,0.1) inset;
+        background-color: darken(#f8f9fa, 10%);
+    }
+}
+
+.usersearch { 
+    position: relative;
+    i {
+        position: absolute;
+        right: 4px;
+        top: 2px;
+        cursor : pointer;
+        user-select: none;
+        font-size: 20px
+    }
+}
+
+@mixin content {
+    justify-content: space-between;
+    border : 1px solid #ddd;
+    box-shadow: $base-box-shadow;
+    width : 75%;
+    height: 70px; 
+    img {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #ddd;
+        border-radius : 50%;
+        cursor: pointer;
+    }
+};
+
+.user {
+    @include content;
+    margin : 30px auto;
+    position: relative;
+    input[type=checkbox] {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
