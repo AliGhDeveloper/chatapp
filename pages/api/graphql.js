@@ -141,10 +141,11 @@ const resolvers = {
         
         return newUser
       },
-      createRoom : async(_, { members }) => {
-        if(members.length < 0 ) return new UserInputError('please add at least one member', {status: 400});
+      createRoom : async(_, { members, name, avatar }) => {
+        
+        if(members.length < 2 ) return new UserInputError('group must have atleast two members', {status: 400});
 
-        const newRoom = new Rooms({members, message: [], name: "New Group"});
+        const newRoom = new Rooms({members, message: [], name, avatar});
         
         members.forEach(async(id) => {
           await Users.findOneAndUpdate({ _id : id }, {$push: {rooms : newRoom._id}} )
@@ -165,7 +166,6 @@ const resolvers = {
         return updatedRoom
       },
       updateRoom : async(_, { data, id}) => {
-        console.log(data)
         if(!data.name && !data.avatar) return new UserInputError('please insert atlease one field', { status: 400 });
         const updatedRoom = await Rooms.findOneAndUpdate({ _id : id }, data)
         return updatedRoom

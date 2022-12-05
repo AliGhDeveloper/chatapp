@@ -110,6 +110,45 @@ a {
   text-decoration: none;
 }
 
+.groupAvatar {
+    position: relative;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    align-items : center;
+    width: 90px;
+    height: 90px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    &:hover {
+      i {
+        position :absolute;
+        bottom: -30px;
+      }
+    }
+    input[type=file] {
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: -1px;
+      top: 20px;
+      padding-top: 13px;
+    }
+    i{
+      position: absolute;
+      padding : 50px;
+      padding-top: 16px;
+      bottom: -200px;
+      left:-13px;
+      background-color: rgba(25, 97, 252, 0.638);
+      transition: ease-in all 0.2s
+    }
+}
+
 
 .groupInfo {
   div {
@@ -184,3 +223,4 @@ a {
 @import './userfriends.scss';
 @import './userchats.scss';
 @import './userinfo.scss';
+@import './chatcreate.scss';

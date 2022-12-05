@@ -7,8 +7,6 @@ import ChatBar from "components/layout/chatbar";
 import {socket} from "utils/socketConnection";
 import Message from "components/message";
 
-
-
 export default function ChatRoom() {
     
     const { state: { auth } } = useContext(Context);
@@ -43,9 +41,6 @@ export default function ChatRoom() {
     window.addEventListener('scroll', handleScroll);
 
     useEffect(() => {
-
-        
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -84,8 +79,8 @@ export default function ChatRoom() {
 
     const handleClick = () => {
         if(!message) return console.log('please at least type sth');
-
         socket.emit('message', {
+            senderid: auth.user.id ,
             content : message,
             sender : auth.user.username,
             time : new Date(),

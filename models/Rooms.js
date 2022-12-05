@@ -18,6 +18,7 @@ const schema = new mongoose.Schema({
     },
     messages : [
         {
+            senderid : { type: String, required: true},
             sender : {type: String, required: true},
             time : {type: Date, required: true},
             content : {type: String, required: true},
@@ -28,6 +29,6 @@ const schema = new mongoose.Schema({
 });
 
 
-const dataset = mongoose.models.Rooms1 || mongoose.model('Rooms1', schema);
+const dataset = mongoose.models.Rooms || mongoose.model('Rooms', schema);
 
 export default dataset

@@ -21,6 +21,7 @@ type User {
 
 
 type Message {
+    senderid: ID
     sender: String
     time : Date
     content : String
@@ -57,7 +58,7 @@ type Query {
 type Mutation {
     addUser(username: String!, email: String!, password: String!) : User
 
-    createRoom(members: [String]!) : Room
+    createRoom(members: [String]!, name: String, avatar:String) : Room
 
     addMembers(id : ID!, newMembers: [String]) : Room
 

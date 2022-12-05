@@ -92,6 +92,7 @@ export const refresh = gql`
         refresh { 
             accesstoken 
             user {
+                avatar
                 id
                 username
                 email
@@ -113,8 +114,8 @@ export const refresh = gql`
 
 
 export const createRoom = gql`
-    mutation CREATE_ROOM($members : [String]!) {
-        createRoom(members : $members) {
+    mutation CREATE_ROOM($members : [String]!, $name: String, $avatar: String) {
+        createRoom(members : $members, name: $name, avatar: $avatar) {
             id
         }
     }
@@ -132,6 +133,7 @@ export const getRoom = gql`
                 avatar
             }
             messages {
+                senderid
                 content
                 sender
                 time

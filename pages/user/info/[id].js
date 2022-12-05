@@ -5,6 +5,7 @@ import { addFriends, refresh } from "utils/queries";
 import { useMutation } from "@apollo/client";
 import { useContext } from 'react';
 import { Context } from 'store/globalstore';
+import Link from 'next/link';
 
 export default function UserInfo({ user }) {
     const { state : { auth } } = useContext(Context);
@@ -32,7 +33,7 @@ export default function UserInfo({ user }) {
                         <img className="addfriend mx-3" onClick={handleClick}  src={'/person-plus.svg'} />
                         : <>remove</>
                     }
-                    <i className="addfriend bi bi-chat-left"></i>
+                    <Link href={`/chatroom/create/${user.id}`}><i className="addfriend bi bi-chat-left"></i></ Link>
                 </div>
             </div>
         </div>

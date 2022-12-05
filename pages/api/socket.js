@@ -55,9 +55,8 @@ export default function socketHandler (req, res) {
             socket.on('join group', roomid => {
                 socket.join(roomid);
                 socket.on('message',async (data) => {
-                    
-                    console.log(typeof(data))
-                    await Rooms.findOneAndUpdate({ _id : roomid }, {$push: {messages : { $each: [{content: data.content, sender: data.sender, time: data.time}], $position: 0 }}})
+                    console.log(data)
+                    await Rooms.findOneAndUpdate({ _id : roomid }, {$push: {messages : { $each: [{content: data.content, sender: data.sender, senderid: data.senderid , time: data.time}], $position: 0 }}})
                     io.sockets.in(roomid).emit('message', data)
                 })
             }) 
