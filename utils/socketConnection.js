@@ -5,7 +5,7 @@ export let socket;
 export default async function socketConnection(setError, setLoading, token = null, dispatch, auth) {
     await fetch(process.env.BASE_URL + '/socket');
    
-    socket = io(process.env.BASE_URL + '/socket',{
+    socket = io('wss://chatapp-alighdeveloper.vercel.app',{
         transports: ['websocket'],
         auth : {
             token 
