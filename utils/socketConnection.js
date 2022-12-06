@@ -6,6 +6,7 @@ export default async function socketConnection(setError, setLoading, token = nul
     await fetch(process.env.BASE_URL + '/socket');
    
     socket = io({
+        transports: ['websocket'],
         auth : {
             token 
         }
