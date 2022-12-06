@@ -12,40 +12,40 @@ export default function socketHandler (req, res) {
         res.socket.server.io = io
         let userid;
 
-        // io.use(async(socket, next) => {
-        //         const {token} = socket.handshake.auth
-        //         console.log("token: ", token)
-        //         let error;
+        io.use(async(socket, next) => {
+                const {token} = socket.handshake.auth
+                console.log("token: ", token)
+                let error;
             
-        //         if(!token) {
-        //             error = new Error('authorization error');
-        //             error.data = { content : "please login first then try again", redirectURL: '/login'}
-        //         } else {
-        //             try {
-        //                 const verify = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+                if(!token) {
+                    error = new Error('authorization error');
+                    error.data = { content : "please login first then try again", redirectURL: '/login'}
+                } else {
+                    try {
+                        const verify = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
                         
-        //                 if(!verify.id) {
-        //                     error = new Error('authorization error');
-        //                     error.data = { content : "please login first then try again", redirectURL: '/login'}
-        //                 }
+                        if(!verify.id) {
+                            error = new Error('authorization error');
+                            error.data = { content : "please login first then try again", redirectURL: '/login'}
+                        }
     
-        //                 userid = verify.id
-        //             } catch(error) {
-        //                 error = new Error(error.message);
-        //                 error.data = { content: null, redirectURL: '/login'}
-        //             }
-        //         }
+                        userid = verify.id
+                    } catch(error) {
+                        error = new Error(error.message);
+                        error.data = { content: null, redirectURL: '/login'}
+                    }
+                }
                 
                 
 
-        //         if(error) {
-        //             console.log("somthing went wrong making socket connection!");
-        //             return next(error)
-        //         }
+                if(error) {
+                    console.log("somthing went wrong making socket connection!");
+                    return next(error)
+                }
 
-        //         next()
+                next()
             
-        // })
+        })
 
         io.on('connection', async(socket) => {
             console.log('socket connected', socket.id);
