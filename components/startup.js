@@ -29,7 +29,7 @@ export default function StartUp({ children }) {
 
     useEffect(() => {
         if(!refreshAuth.loading){
-            socketConnection(setError, setLoading, auth.accesstoken);
+            // socketConnection(setError, setLoading, auth.accesstoken);
         }
     }, [auth])
     
