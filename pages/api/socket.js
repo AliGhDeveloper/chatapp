@@ -8,7 +8,9 @@ export default function socketHandler (req, res) {
         console.log('socketserver already exist')
     } else {
         console.log('initializing socket server...')
-        const io = new Server(res.socket.server);
+        const io = new Server(res.socket.server,{ 
+            cors: "*",
+        });
         res.socket.server.io = io
         let userid;
 
