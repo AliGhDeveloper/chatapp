@@ -12,6 +12,7 @@ export default async function socketConnection(setError, setLoading, token = nul
     });
 
     socket.on("connect_error", (error) => {
+        console.log(error)
         setError(error)
         setLoading(false)
     })
