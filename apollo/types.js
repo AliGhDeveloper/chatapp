@@ -64,6 +64,8 @@ type Mutation {
 
     updateRoom(id : ID!, data: Data ) : Room
 
+    removeFriend( id: ID! , friendid : ID!) : String
+
     addFriend(friendid: ID, token: String) : User
 }
 `;

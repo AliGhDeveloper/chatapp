@@ -3,8 +3,10 @@ import Navbar from 'components/layout/navbar'
 import StartUp from 'components/startup'
 import ContextProvider, { Context } from 'store/globalstore'
 import ApolloP from 'apollo/apollo'
+import { useEffect } from 'react'
 
 function MyApp({ Component, pageProps }) {
+  
   if(Component.getLayout){
     return (
       <ApolloP>

@@ -25,5 +25,8 @@ export default async function socketConnection(setError, setLoading, token = nul
         // dispatch({ type: 'AUTH', payload: {...auth, user: {...auth.user, socketid}}})
     });
 
+    socket.on('disconnect', () => {
+        console.log('disconnected')
+    }) 
     
 }

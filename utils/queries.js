@@ -142,3 +142,8 @@ export const getRoom = gql`
     }
 `;
 
+export const removeFriend = gql`
+    mutation REMOVE_FRIEND( $id: ID!, $friendid : ID!) {
+        removeFriend( id: $id, friendid : $friendid)
+    }
+`
