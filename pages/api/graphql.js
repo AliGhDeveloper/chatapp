@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import { accessToken, refreshToken, validRefToken, validAcToken } from 'utils/tokenGenerate';
 import { setCookie } from 'cookies-next';
 import Rooms from 'models/Rooms';
+import { pusher } from './pusher';
 
 
 db_connect();
@@ -85,7 +86,7 @@ const resolvers = {
         
         
         const accesstoken = await accessToken(user);
-
+        
         return { 
           accesstoken,
           user
@@ -127,6 +128,14 @@ const resolvers = {
         let friends = user.friends;
         friends.push(friendid);
         await Users.findOneAndUpdate({_id : valid.id}, { friends })
+      },
+      removeFriend : async(_, {id, friendid} ) => {
+        try {
+          await Users.findOneAndUpdate({ _id : id }, {$pull: {friends : friendid}} )
+          return friendid
+        } catch( error ){
+          console.log(error)
+        }
       },
       addUser : async(parent, {username, email, password}, {_, res}) => {
         if(!username || !email || !password ) return new UserInputError('please add all fields!', {status: 404});

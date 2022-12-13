@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
-export default function Message({ data, auth, index, lastmessage, length }) {
-    console.log(data)
+export default function Message({ data, limit, auth, index, lastmessage, length }) {
+    
     const router = useRouter();
     return (
-        <div ref={index === length - 5 ? lastmessage : null} className={`message-box ${auth.user.username !== data.sender ? 'align-self-end' : ''}`}>
+        <div ref={index === length - limit ? lastmessage : null} className={`message-box ${auth.user.username !== data.sender ? 'align-self-end' : ''}`}>
             <span className="header" onClick={() => router.push(`/user/info/${data.senderid}`)}>
                 {
                     data.sender === auth.user.username

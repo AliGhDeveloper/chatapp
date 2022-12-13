@@ -13,6 +13,7 @@ export default function Sidebar({open}) {
     return (
         <div className={`sidebar ${open ? 'show' : ''}`}>
             <ul>
+                <Link href="/profile"><li>Profile</li></Link>
                 <Link href="/"><li>Chats</li></Link>
                 <Link href="/about"><li>About</li></Link>
                 <Link href="#"><li>Settings</li></Link>

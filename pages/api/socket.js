@@ -2,8 +2,22 @@ import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import Users from 'models/Users';
 import Rooms from 'models/Rooms';
+import Pusher from 'pusher';
+
+export const pusher = new Pusher({
+    appId: process.env.APP_ID,
+    key: process.env.KEY,
+    secret: process.env.SECRET,
+    cluster: process.env.CLUSTER,
+    useTLS: true,
+});
+
+
 export default function socketHandler (req, res) {
     
+    
+
+
     if(res.socket.server.io){
         console.log('socketserver already exist')
     } else {
@@ -49,17 +63,21 @@ export default function socketHandler (req, res) {
 
         io.on('connection', async(socket) => {
             console.log('socket connected', socket.id);
-            await Users.findOneAndUpdate({ _id : userid }, { socketid : socket.id })
+            await Users.findOneAndUpdate({ _id : userid }, { socketid : socket.id, online : true })
 
            
             socket.on('join group', roomid => {
                 socket.join(roomid);
                 socket.on('message',async (data) => {
                     console.log(data)
-                    await Rooms.findOneAndUpdate({ _id : roomid }, {$push: {messages : { $each: [{content: data.content, sender: data.sender, senderid: data.senderid , time: data.time}], $position: 0 }}})
                     io.sockets.in(roomid).emit('message', data)
                 })
-            }) 
+            });
+
+
+            socket.on('disconnect', async() => {
+                await Users.findOneAndUpdate( { _id : userid }, { socketid : '', online : false}) 
+            })
         }) 
     } 
 

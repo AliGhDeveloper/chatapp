@@ -9,11 +9,7 @@ import { useRouter } from "next/router";
 export default function StartUp({ children }) {
     const router = useRouter();
     const { state: { auth }, dispatch } = useContext(Context);
-    const [loading, setLoading] = useState(true)
     const refreshAuth = useQuery(refresh);
-    const [error, setError] = useState({})
-
-    
     
     useEffect(() => {
         if(!refreshAuth.loading) {
@@ -26,15 +22,8 @@ export default function StartUp({ children }) {
             router.push('/login')
         }
     }, [auth])
-
-    useEffect(() => {
-        if(!refreshAuth.loading){
-            socketConnection(setError, setLoading, auth.accesstoken);
-        }
-    }, [auth])
     
-    if(loading || refreshAuth.loading) return <Loading />
-    // if(!refreshAuth.loading && error.message && !loading  ) 
+    if(refreshAuth.loading) return <Loading />
 
     return (
         <>
