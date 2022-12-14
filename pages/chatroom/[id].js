@@ -36,6 +36,7 @@ export default function ChatRoom() {
     window.addEventListener('scroll', (e) => scrollEvent(e));
 
     useEffect(() => {
+        
         const pusher = new Pusher(process.env.NEXT_PUBLIC_KEY, {
             cluster:  "ap1"
         });
